@@ -15,6 +15,7 @@ app = FastAPI()
 
 VOICE_TOKEN = os.getenv("VOICE_TOKEN")
 DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
+
 DEEPGRAM_TTS_URL = "https://api.deepgram.com/v1/speak"
 
 class TTSRequest(BaseModel):

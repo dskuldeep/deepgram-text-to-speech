@@ -5,7 +5,7 @@ import google.generativeai as genai
 
 API_URL = "http://localhost:8000/tts"  # Adjust if running FastAPI elsewhere
 API_TOKEN = "fdavblifgbakdsjbfkasdb12jkabndifjb"
-GOOGLE_API_KEY = "AIzaSyAsmxYSa8tMgXM2RrjC5Bgx89K6tPBpp9U"
+GOOGLE_API_KEY = "AIzaSyCh4Bf5n0T0i72toHsU7joJNtdoELwArbc"
 
 # Configure Google AI
 genai.configure(api_key=GOOGLE_API_KEY)

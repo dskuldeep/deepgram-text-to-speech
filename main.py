@@ -13,6 +13,7 @@ import asyncio
 
 app = FastAPI()
 
+# To run this script run: gunicorn main:app --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:80
 VOICE_TOKEN = os.getenv("VOICE_TOKEN")
 DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
 

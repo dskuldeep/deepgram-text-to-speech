@@ -137,9 +137,17 @@ def clean_text_for_speech(text):
     text = re.sub(r'\[([^\]]*)\]\([^\)]*\)', r'\1', text)  # Convert links to text
     text = re.sub(r'_{2,}', '', text)  # Remove underscores
     
-    # Fix common issues for speech
+    # Enhance punctuation for better speech pauses
     text = re.sub(r'\s+', ' ', text)  # Normalize whitespace
-    text = re.sub(r'([.!?])\s*([A-Z])', r'\1 \2', text)  # Ensure space after punctuation
+    text = re.sub(r'([.!?])\s*([A-Z])', r'\1 \2', text)  # Ensure space after sentence endings
+    text = re.sub(r',\s*', ', ', text)  # Ensure space after commas
+    text = re.sub(r'([.!?])\s*', r'\1 ', text)  # Ensure space after all sentence endings
+    
+    # Add explicit pauses for certain phrases
+    text = re.sub(r'(you know|well|actually|basically|also|additionally)', r'\1,', text)
+    
+    # Add pauses for natural speech patterns
+    text = re.sub(r'(first|second|third|finally|moreover|furthermore)', r'\1,', text)
     
     return text.strip()
 
@@ -224,7 +232,7 @@ async def fetch_tts_audio_chunk(text_chunk, voice, encoding, sample_rate=None, b
         adjusted_speed = min(speed, 1.2) if speed > 1.2 else speed
         params["speed"] = adjusted_speed
     else:
-        params["speed"] = 0.95  # Slightly slower than default for more natural speech
+        params["speed"] = 0.8  # Default to slightly slower for better pacing
     
     if pitch is not None:
         params["pitch"] = pitch
@@ -234,10 +242,10 @@ async def fetch_tts_audio_chunk(text_chunk, voice, encoding, sample_rate=None, b
         params["punctuate"] = str(punctuate).lower()
     if utterance_end_ms is not None:
         # Increase pause time for better pacing
-        enhanced_pause = max(utterance_end_ms, 800)
+        enhanced_pause = max(utterance_end_ms, 1200)
         params["utterance_end_ms"] = enhanced_pause
     else:
-        params["utterance_end_ms"] = 1200  # Default longer pause
+        params["utterance_end_ms"] = 1500  # Default longer pause
     # Enhanced filler words configuration for more natural speech
     if filler_words is not None and filler_words:
         params["filler_words"] = "true"

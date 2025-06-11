@@ -38,7 +38,7 @@ with col1:
     language = st.selectbox("Language", ["en", "es", "fr", "de", "it", "pt", "ru", "ja", "ko", "zh"], index=0)
 
 with col2:
-    speed = st.slider("Speech Speed", min_value=0.5, max_value=2.0, value=0.7, step=0.1, help="Adjust speaking speed")
+    speed = st.slider("Speech Speed", min_value=0.5, max_value=2.0, value=0.8, step=0.1, help="Adjust speaking speed")
     pitch = st.slider("Pitch (semitones)", min_value=-20.0, max_value=20.0, value=0.0, step=0.5, help="Adjust voice pitch")
 
 # Audio Quality Settings
@@ -52,7 +52,7 @@ with st.expander("🎵 Audio Quality Settings"):
         else:
             bit_rate = st.selectbox("Bit Rate (bps)", [96000, 128000, 160000, 192000, 224000, 256000, 320000], index=3, help="Higher = better quality")
     with col2:
-        utterance_end_ms = st.slider("Utterance End Silence (ms)", min_value=0, max_value=3000, value=1000, step=100, help="Silence at end of sentences")
+        utterance_end_ms = st.slider("Utterance End Silence (ms)", min_value=0, max_value=3000, value=1500, step=100, help="Silence at end of sentences")
 
 # Natural Speech Enhancement
 with st.expander("🗣️ Natural Speech Enhancement"):
@@ -134,13 +134,13 @@ def make_tts_request(text_to_convert, mode_to_use):
         "encoding": encoding,
         "sample_rate": sample_rate,
         "bit_rate": bit_rate,
-        "speed": speed,
+        "speed": 0.8,  # Slightly slower for better pacing
         "pitch": pitch,
         "language": language,
-        "punctuate": punctuate,
-        "utterance_end_ms": utterance_end_ms,
-        "filler_words": filler_words,
-        "smart_format": smart_format,
+        "punctuate": True,  # Ensure punctuation is respected
+        "utterance_end_ms": 1500,  # Longer pause at sentence ends
+        "filler_words": True,
+        "smart_format": True,
         "callback_url": callback_url if callback_url.strip() else None,
         "callback_method": callback_method
     }

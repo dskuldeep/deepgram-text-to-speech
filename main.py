@@ -13,8 +13,8 @@ import asyncio
 
 app = FastAPI()
 
-VOICE_TOKEN = "fdavblifgbakdsjbfkasdb12jkabndifjb"
-DEEPGRAM_API_KEY = "9732e1f98071adae9e61943d5329b28b19b855fd"  # Replace with your Deepgram API key
+VOICE_TOKEN = os.getenv("VOICE_TOKEN")
+DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
 DEEPGRAM_TTS_URL = "https://api.deepgram.com/v1/speak"
 
 class TTSRequest(BaseModel):
